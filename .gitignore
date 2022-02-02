@@ -1,0 +1,9 @@
+.idea/
+venv*/
+dev/*
+tmp/*
+modules/*.pyc
+*.pyc
+*~
+*.swo
+*.swp
