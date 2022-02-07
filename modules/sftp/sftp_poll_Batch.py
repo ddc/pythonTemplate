@@ -69,6 +69,71 @@ class SFTP:
         return {"sftp": sftp, "transport": transport, "error_msg": None}
 
 
+    def start_send_paramiko_pool(self, file_src, file_dst):
+        conn = self._get_paramiko_connection(file_src)
+        if conn.get("error_msg") is not None:
+            return {"result": False, "level": "ERROR", "msg": conn.get("error_msg"),
+                    "filename": os.path.basename(file_src)}
+
+        sftp = conn.get("sftp")
+        transport = conn.get("transport")
+        temp_file_dst = f"{file_dst}_part"
+        log_header_msg = f"[PARAMIKO]:[{self.full_host}]"
+
+        if sftp is not None and transport is not None:
+            local_stat = os.stat(file_src)
+            times = (local_stat.st_atime, local_stat.st_mtime)
+
+            try:
+                sftp.remove(file_dst)
+            except IOError as e:
+                if hasattr(e, "errno") and e.errno == 13:
+                    sftp.close() if sftp is not None else None
+                    transport.close() if transport is not None else None
+                    msg = f"{log_header_msg}:{messages.FILE_REPLACE_DENIED}:" \
+                          f"{utils.get_exception(e)}: {os.path.basename(file_dst)}"
+                    return {"result": False, "level": "ERROR", "msg": msg, "filename": os.path.basename(file_dst)}
+
+            try:
+                sftp.put(file_src, temp_file_dst)
+                if sftp.stat(temp_file_dst).st_size == local_stat.st_size:
+                    sftp.rename(temp_file_dst, file_dst)
+                    sftp.utime(file_dst, times)
+                    sftp.close() if sftp is not None else None
+                    transport.close() if transport is not None else None
+                else:
+                    sftp.remove(temp_file_dst)
+                    sftp.close() if sftp is not None else None
+                    transport.close() if transport is not None else None
+                    msg = f"{log_header_msg}:{messages.SFTP_TRANSFER_ERROR}:{file_src}"
+                    return {"result": False, "level": "ERROR", "msg": msg, "filename": os.path.basename(file_src)}
+            except Exception as e:
+                sftp.close()
+                transport.close() if transport is not None else None
+                msg = f"{log_header_msg}:{messages.SFTP_TRANSFER_ERROR}:{utils.get_exception(e)}: {file_src}"
+                return {"result": False, "level": "ERROR", "msg": msg, "filename": os.path.basename(file_src)}
+
+            if self.backup_dir is not None and len(self.backup_dir) > 0 and os.path.isdir(self.backup_dir):
+                utils.start_backup(file_src, f"{self.backup_dir}/{os.path.basename(file_dst)}")
+
+            try:
+                if os.path.isfile(file_src):
+                    os.remove(file_src)
+            except Exception as e:
+                msg = f"{log_header_msg}:{messages.FILE_REMOVE_ERROR}:{utils.get_exception(e)}: " \
+                      f"{os.path.basename(file_src)}"
+                return {"result": False, "level": "ERROR", "msg": msg, "filename": os.path.basename(file_src)}
+
+            msg = f"[PARAMIKO]:[{messages.SFTP_TRANSFERED}]:" \
+                  f"[{self.full_host}]:" \
+                  f"[{local_stat.st_size} bytes]: " \
+                  f"{file_src} -> {file_dst}"
+            return {"result": True, "level": "INFO", "msg": msg, "filename": os.path.basename(file_dst)}
+        else:
+            msg = f"{log_header_msg}:{conn.get('error_msg')}"
+            return {"result": False, "level": "ERROR", "msg": msg, "filename": os.path.basename(file_src)}
+
+
     def start_send_sftp_pool(self, file_src, file_dst):
         """
             /usr/bin/sftp -p -b /tmp/sftp_batch.txt -P 2201 -i ~/.ssh/id_rsa user@host
@@ -153,69 +218,4 @@ class SFTP:
                   f"[{size_bytes}]: " \
                   f"{utils.get_exception(e)}: " \
                   f"{file_src}"
-            return {"result": False, "level": "ERROR", "msg": msg, "filename": os.path.basename(file_src)}
-
-
-    def start_send_paramiko_pool(self, file_src, file_dst):
-        conn = self._get_paramiko_connection(file_src)
-        if conn.get("error_msg") is not None:
-            return {"result": False, "level": "ERROR", "msg": conn.get("error_msg"),
-                    "filename": os.path.basename(file_src)}
-
-        sftp = conn.get("sftp")
-        transport = conn.get("transport")
-        temp_file_dst = f"{file_dst}_part"
-        log_header_msg = f"[PARAMIKO]:[{self.full_host}]"
-
-        if sftp is not None and transport is not None:
-            local_stat = os.stat(file_src)
-            times = (local_stat.st_atime, local_stat.st_mtime)
-
-            try:
-                sftp.remove(file_dst)
-            except IOError as e:
-                if hasattr(e, "errno") and e.errno == 13:
-                    sftp.close() if sftp is not None else None
-                    transport.close() if transport is not None else None
-                    msg = f"{log_header_msg}:{messages.FILE_REPLACE_DENIED}:" \
-                          f"{utils.get_exception(e)}: {os.path.basename(file_dst)}"
-                    return {"result": False, "level": "ERROR", "msg": msg, "filename": os.path.basename(file_dst)}
-
-            try:
-                sftp.put(file_src, temp_file_dst)
-                if sftp.stat(temp_file_dst).st_size == local_stat.st_size:
-                    sftp.rename(temp_file_dst, file_dst)
-                    sftp.utime(file_dst, times)
-                    sftp.close() if sftp is not None else None
-                    transport.close() if transport is not None else None
-                else:
-                    sftp.remove(temp_file_dst)
-                    sftp.close() if sftp is not None else None
-                    transport.close() if transport is not None else None
-                    msg = f"{log_header_msg}:{messages.SFTP_TRANSFER_ERROR}:{file_src}"
-                    return {"result": False, "level": "ERROR", "msg": msg, "filename": os.path.basename(file_src)}
-            except Exception as e:
-                sftp.close()
-                transport.close() if transport is not None else None
-                msg = f"{log_header_msg}:{messages.SFTP_TRANSFER_ERROR}:{utils.get_exception(e)}: {file_src}"
-                return {"result": False, "level": "ERROR", "msg": msg, "filename": os.path.basename(file_src)}
-
-            if self.backup_dir is not None and len(self.backup_dir) > 0 and os.path.isdir(self.backup_dir):
-                utils.start_backup(file_src, f"{self.backup_dir}/{os.path.basename(file_dst)}")
-
-            try:
-                if os.path.isfile(file_src):
-                    os.remove(file_src)
-            except Exception as e:
-                msg = f"{log_header_msg}:{messages.FILE_REMOVE_ERROR}:{utils.get_exception(e)}: " \
-                      f"{os.path.basename(file_src)}"
-                return {"result": False, "level": "ERROR", "msg": msg, "filename": os.path.basename(file_src)}
-
-            msg = f"[PARAMIKO]:[{messages.SFTP_TRANSFERED}]:" \
-                  f"[{self.full_host}]:" \
-                  f"[{local_stat.st_size} bytes]: " \
-                  f"{file_src} -> {file_dst}"
-            return {"result": True, "level": "INFO", "msg": msg, "filename": os.path.basename(file_dst)}
-        else:
-            msg = f"{log_header_msg}:{conn.get('error_msg')}"
             return {"result": False, "level": "ERROR", "msg": msg, "filename": os.path.basename(file_src)}

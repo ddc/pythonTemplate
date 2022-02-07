@@ -5,7 +5,7 @@
 STARTING = "Starting"
 FINISHED = "Finished"
 NOT_FOUND = "Not found"
-ERROR_ABORT = "[ERROR]:[EXITING]"
+EXITING = "[EXITING]"
 TOTAL_SECONDS = "Total run time in seconds"
 CONFIG_FILE = "Configuration file"
 HELP_DEBUG = "[OPTIONAL] Enable debug in logs"
@@ -25,8 +25,8 @@ PERMISSION_CURRENT = "Current Permission"
 #################################
 # LOGS
 #################################
-LOGS_DIR_NOT_FOUND = f"{ERROR_ABORT}:UNABLE TO CREATE LOGS DIRECTORY"
-LOG_FILE_NOT_WRITABLE = f"{ERROR_ABORT}:UNABLE TO OPEN THE LOG FILE FOR WRITING"
+LOGS_DIR_NOT_FOUND = f"[ERROR]:{EXITING}:UNABLE TO CREATE LOGS DIRECTORY"
+LOG_FILE_NOT_WRITABLE = f"[ERROR]:{EXITING}:UNABLE TO OPEN THE LOG FILE FOR WRITING"
 LOG_COMPRESS_ERROR = "[ERROR]:UNABLE TO COMPRESS THE LOG FILE"
 LOG_RENAME_ERROR = "[ERROR]:UNABLE TO RENAME THE LOG FILE TO TODAY'S DATE"
 LOG_REMOVE_ERROR = "[ERROR]:UNABLE TO REMOVE THE LOG FILE"
@@ -55,7 +55,7 @@ FILE_REPLACE_DENIED = "Permission denied when replacing the file"
 # DIR_CREATE_ERROR = "Unable to create directory"
 DIR_CREATE_NO_PERMS = "Permission denied when creating directory"
 DIR_TMP_CREATE_ERROR = "Unable to create temporary directory for files that failed the upload"
-DIR_LOCAL_NOT_FOUND = f"{ERROR_ABORT}:Local directory not found"
+DIR_LOCAL_NOT_FOUND = f"{EXITING}:Local directory not found"
 #################################
 # DATABASE
 #################################
@@ -104,6 +104,6 @@ SFTP_BIN_NOT_FOUND = "SFTP not found"
 # SFTP_RESEND_ERROR = "Unbale to resend the file"
 SFTP_TRANSFERED = "TRANSFERED"
 #################################
-# PROGRAM SPECIFIC
+# PROGRAM
 #################################
 PROGRAM_DESCRIPTION = ""

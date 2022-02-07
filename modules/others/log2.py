@@ -76,20 +76,20 @@ class GZipRotator:
                     with gzip.open("{}.gz".format(log_backup_path), "wb") as fout:
                         fout.writelines(fin)
             except Exception as e:
-                sys.stderr.write("{}:{}: {}\n".format(messages.LOG_COMPRESS_FAILED,
+                sys.stderr.write("{}:{}: {}\n".format(messages.LOG_COMPRESS_ERROR,
                                                       utils.get_exception(e),
                                                       log_backup_path))
                 try:
                     os.rename(log_file_path, log_backup_path) if os.path.isfile(log_file_path) else None
                 except IOError as e:
-                    sys.stderr.write("{}: {}\n".format(messages.LOG_RENAMED_FAILED,
+                    sys.stderr.write("{}: {}\n".format(messages.LOG_RENAME_ERROR,
                                                        utils.get_exception(e)))
                 return
 
             try:
                 os.remove(log_file_path) if os.path.isfile(log_file_path) else None
             except Exception as e:
-                sys.stderr.write("{}:{}: {}\n".format(messages.LOG_REMOVED_FAILED,
+                sys.stderr.write("{}:{}: {}\n".format(messages.LOG_REMOVE_ERROR,
                                                       utils.get_exception(e),
                                                       log_file_path))
 
@@ -105,6 +105,6 @@ class RemoveOldLogs:
                     try:
                         os.remove(full_path) if os.path.isfile(full_path) else None
                     except OSError as e:
-                        sys.stderr.write("{}:{}: {}\n".format(messages.LOG_REMOVED_FAILED,
+                        sys.stderr.write("{}:{}: {}\n".format(messages.LOG_REMOVE_ERROR,
                                                               utils.get_exception(e),
                                                               full_path))

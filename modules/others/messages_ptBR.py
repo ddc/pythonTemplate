@@ -5,7 +5,7 @@
 STARTING = "Iniciando"
 FINISHED = "Finalizado"
 NOT_FOUND = "Nao encontrado"
-ERROR_ABORT = "[ERROR]:[EXECUCAO ABORTADA]"
+EXITING = "[EXECUCAO ABORTADA]"
 TOTAL_SECONDS = "Tempo total de execucao em segundos"
 CONFIG_FILE = "Arquivo de configuracoes"
 HELP_DEBUG = "[OPCIONAL] Habilitar debug nos logs"
@@ -25,8 +25,8 @@ PASSWORD_HIDDEN_MSG = "HIDENPASSWORD"
 #################################
 # LOGS
 #################################
-LOGS_DIR_NOT_FOUND = f"{ERROR_ABORT}:NAO FOI POSSIVEL CRIAR DIRETORIO DE LOGS"
-LOG_FILE_NOT_WRITABLE = f"{ERROR_ABORT}:NAO FOI POSSIVEL REALIZAR ESCRITA NO ARQUIVO DE LOG"
+LOGS_DIR_NOT_FOUND = f"[ERROR]:{EXITING}:NAO FOI POSSIVEL CRIAR DIRETORIO DE LOGS"
+LOG_FILE_NOT_WRITABLE = f"[ERROR]:{EXITING}:NAO FOI POSSIVEL REALIZAR ESCRITA NO ARQUIVO DE LOG"
 LOG_COMPRESS_ERROR = "[ERROR]:NAO FOI POSSIVEL COMPACTAR O ARQUIVO DE LOG"
 LOG_RENAME_ERROR = "[ERROR]:NAO FOI POSSIVEL RENOMEAR O ARQUIVO PARA A DATA DE HOJE"
 LOG_REMOVE_ERROR = "[ERROR]:NAO FOI POSSIVEL REMOVER O LOG"
@@ -55,7 +55,7 @@ FILE_REPLACE_DENIED = "Permissao negada ao substituir"
 # DIR_CREATE_ERROR = "Nao foi possivel criar o diretorio"
 DIR_CREATE_NO_PERMS = "Permissao negada ao criar diretorio"
 DIR_TMP_CREATE_ERROR = "Nao foi possivel criar o diretorio temporario para os arquivos que falharam a transmissao"
-DIR_LOCAL_NOT_FOUND = f"{ERROR_ABORT}:Diretorio local inexistente"
+DIR_LOCAL_NOT_FOUND = f"{EXITING}:Diretorio local inexistente"
 #################################
 # DATABASE
 #################################
@@ -105,6 +105,6 @@ SFTP_BIN_NOT_FOUND = "Executavel nao encontrado"
 # SFTP_RESEND_ERROR = "Nao sera possivel reenviar o arquivo"
 SFTP_TRANSFERED = "TRANSFERIDO"
 #################################
-# PROGRAM SPECIFIC
+# PROGRAM
 #################################
 PROGRAM_DESCRIPTION = ""

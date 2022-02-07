@@ -23,7 +23,7 @@ class Template:
         log_kwargs = {"days_to_keep": self.main.DAYS_TO_KEEP_LOGS,
                       "debug": self.debug}
         self.log = Log(**log_kwargs).setup_logging()
-        self.log.info(f"{messages.STARTING} v{constants.VERSION}")
+        self.log.info(f"[PID:{os.getpid()}]:{messages.STARTING} v{constants.VERSION}")
 
         main.start(self)
 
@@ -33,10 +33,12 @@ class Template:
 
 if __name__ == "__main__":
     if not constants.PYTHON_OK:
-        sys.stderr.write(f"{messages.ERROR_ABORT}:Python {constants.MIN_PYTHON_VERSION} {messages.NOT_FOUND}\n")
+        sys.stderr.write(f"[ERROR]:{messages.EXITING}:"
+                         f"Python {constants.MIN_PYTHON_VERSION} {messages.NOT_FOUND}\n")
         sys.exit(1)
     if not os.path.isfile(constants.CFG_FILE):
-        sys.stderr.write(f"{messages.ERROR_ABORT}:{messages.CONFIG_FILE} {messages.NOT_FOUND}: {constants.CFG_FILE}\n")
+        sys.stderr.write(f"[ERROR]:{messages.EXITING}:"
+                         f"{messages.CONFIG_FILE} {messages.NOT_FOUND}: {constants.CFG_FILE}\n")
         sys.exit(1)
     os.environ["COLUMNS"] = "200"
     parser = ArgumentParser(add_help=False)

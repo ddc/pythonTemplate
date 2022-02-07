@@ -28,7 +28,7 @@ class MongoUtils:
 
     def get_db_connection(self):
         self.log.debug(f"{self.init_log_msg}:{messages.DB_CONN_STARTING}")
-        error_msg = f"{self.init_log_msg}:[{messages.ERROR_ABORT}]:{messages.DB_CONN_ERROR}:"
+        error_msg = f"{self.init_log_msg}:[{messages.EXITING}]:{messages.DB_CONN_ERROR}:"
         mongo_client = None
 
         try:
