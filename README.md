@@ -1,5 +1,7 @@
 # TEMPLATE
 [<img src="https://img.shields.io/badge/python-3.6-blue.svg?style=plastic">](https://www.python.org/downloads)
+[<img src="https://img.shields.io/badge/OS-Linux-lightgrey.svg?style=plastic">]()
+[<img src="https://img.shields.io/badge/OS-Windows-lightblue.svg?style=plastic">]()
 [<img src="https://img.shields.io/github/license/ddc/pythonTemplate.svg?style=plastic">](https://github.com/ddc/pythonTemplate/blob/master/LICENSE)
 
 
