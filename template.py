@@ -1,11 +1,11 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import os
 import sys
 from modules.log import Log
 from argparse import ArgumentParser
-from modules import main, utils, constants, messages
 from timeit import default_timer as timer
+from modules import main, utils, constants, messages
 
 
 class Template:
@@ -17,7 +17,7 @@ class Template:
         self.__dict__.update(kwargs)
 
 
-    def run(self):
+    def init(self):
         start_timer = timer()
 
         log_kwargs = {"days_to_keep": self.main.DAYS_TO_KEEP_LOGS,
@@ -41,7 +41,7 @@ if __name__ == "__main__":
                          f"{messages.CONFIG_FILE} {messages.NOT_FOUND}: {constants.CFG_FILE}\n")
         sys.exit(1)
     os.environ["COLUMNS"] = "200"
-    parser = ArgumentParser(add_help=False)
+    parser = ArgumentParser(description=messages.PROGRAM_DESCRIPTION, add_help=True)
     parser.add_argument("-d", "--debug",
                         required=False,
                         action="store_true",
@@ -51,4 +51,4 @@ if __name__ == "__main__":
     settings_vars.update({"debug": args.debug})
     t = Template(**settings_vars)
     del settings_vars
-    t.run()
+    t.init()

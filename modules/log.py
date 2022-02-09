@@ -9,7 +9,7 @@ from modules import utils, messages, constants
 class Log:
     def __init__(self, **kwargs):
         self.filename = kwargs.get("filename", None)
-        self.days_to_keep = int(kwargs.get("days_to_keep", 30))
+        self.days_to_keep = int(kwargs.get("days_to_keep", 90))
         self.level = logging.DEBUG if kwargs.get("debug") else logging.INFO
         self.dir = kwargs.get("dir", constants.DIR_LOGS)
 
@@ -79,7 +79,7 @@ class GZipRotator:
                     with gzip.open(renamed_dst, "wb") as fout:
                         fout.writelines(fin)
             except Exception as e:
-                sys.stderr.write(f"{messages.LOG_COMPRESS_FAILED}:"
+                sys.stderr.write(f"{messages.LOG_COMPRESS_ERROR}:"
                                  f"{utils.get_exception(e)}: "
                                  f"{source}\n")
                 return
@@ -87,7 +87,7 @@ class GZipRotator:
             try:
                 os.remove(source)
             except OSError as e:
-                sys.stderr.write(f"{messages.LOG_REMOVED_FAILED}:"
+                sys.stderr.write(f"{messages.LOG_REMOVE_ERROR}:"
                                  f"{utils.get_exception(e)}: "
                                  f"{source}\n")
 
@@ -103,6 +103,6 @@ class RemoveOldLogs:
                     try:
                         os.remove(file_path)
                     except OSError as e:
-                        sys.stderr.write(f"{messages.LOG_REMOVED_FAILED}:"
+                        sys.stderr.write(f"{messages.LOG_REMOVE_ERROR}:"
                                          f"{utils.get_exception(e)}: "
                                          f"{file_path}\n")

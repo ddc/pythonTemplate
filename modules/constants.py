@@ -15,7 +15,7 @@ _script_path = Path(os.path.dirname(sys.argv[0])).absolute()
 try:
     TMP_DIR = os.path.normpath("{}/tmp".format(_script_path))
     os.makedirs(TMP_DIR) if not os.path.isdir(TMP_DIR) else None
-except OSError as e:
+except OSError:
     TMP_DIR = "/tmp"
 
 
@@ -44,5 +44,5 @@ SFTP_CONN_WAIT_TIME = 1.0
 #CPU_COUNT = os.cpu_count() if int(os.cpu_count()) < 4 else 4
 #PID_FILE = os.path.normpath("{}/pidFile.pid".format(TMP_DIR))
 ################
-# PROGRAM SPECIFIC
+# PROGRAM
 ################

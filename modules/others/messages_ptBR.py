@@ -2,10 +2,10 @@
 #################################
 # MAIN
 #################################
-STARTING = "Iniciando"
-FINISHED = "Finalizado"
-NOT_FOUND = "Nao encontrado"
+STARTING = "INICIANDO"
+FINISHED = "FINALIZADO"
 EXITING = "[EXECUCAO ABORTADA]"
+NOT_FOUND = "Nao encontrado"
 TOTAL_SECONDS = "Tempo total de execucao em segundos"
 CONFIG_FILE = "Arquivo de configuracoes"
 HELP_DEBUG = "[OPCIONAL] Habilitar debug nos logs"
@@ -33,6 +33,7 @@ LOG_REMOVE_ERROR = "[ERROR]:NAO FOI POSSIVEL REMOVER O LOG"
 #################################
 # FILES
 #################################
+# FILE_NOT_FOUND = "Arquivo nao encontrado"
 # FILE_REMOVING = "Removendo o arquivo"
 # FILE_REMOVE_SUCCESS = "Arquivo removido com sucesso"
 FILE_REMOVE_ERROR = "Nao foi possivel remover o arquivo"
@@ -107,4 +108,6 @@ SFTP_TRANSFERED = "TRANSFERIDO"
 #################################
 # PROGRAM
 #################################
-PROGRAM_DESCRIPTION = ""
+PROGRAM_DESCRIPTION = "Template program"
+HELP_1 = "[REQUIRED] help 1"
+HELP_2 = "[OPTIONAL] help 2"

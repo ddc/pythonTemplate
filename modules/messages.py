@@ -2,10 +2,10 @@
 #################################
 # MAIN
 #################################
-STARTING = "Starting"
-FINISHED = "Finished"
-NOT_FOUND = "Not found"
+STARTING = "STARTING"
+FINISHED = "FINISHED"
 EXITING = "[EXITING]"
+NOT_FOUND = "Not found"
 TOTAL_SECONDS = "Total run time in seconds"
 CONFIG_FILE = "Configuration file"
 HELP_DEBUG = "[OPTIONAL] Enable debug in logs"
@@ -33,6 +33,7 @@ LOG_REMOVE_ERROR = "[ERROR]:UNABLE TO REMOVE THE LOG FILE"
 #################################
 # FILES
 #################################
+# FILE_NOT_FOUND = "File not found"
 # FILE_REMOVING = "Removing the file"
 # FILE_REMOVE_SUCCESS = "File successfully removed"
 FILE_REMOVE_ERROR = "Unable to remove the file"
@@ -106,4 +107,6 @@ SFTP_TRANSFERED = "TRANSFERED"
 #################################
 # PROGRAM
 #################################
-PROGRAM_DESCRIPTION = ""
+PROGRAM_DESCRIPTION = "Template program"
+HELP_1 = "[REQUIRED] help 1"
+HELP_2 = "[OPTIONAL] help 2"
