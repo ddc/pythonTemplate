@@ -96,9 +96,10 @@ class RemoveOldLogs:
     def __init__(self, dir_logs, days_to_keep):
         if os.path.isdir(dir_logs):
             files_list = [f for f in os.listdir(dir_logs)
-                          if os.path.isfile(f"{dir_logs}/{f}") and f.lower().endswith(".gz")]
+                          if os.path.isfile(os.path.normpath(f"{dir_logs}/{f}"))
+                          and f.lower().endswith(".gz")]
             for file in files_list:
-                file_path = f"{dir_logs}/{file}"
+                file_path = os.path.normpath(f"{dir_logs}/{file}")
                 if utils.is_file_older_than_x_days(file_path, days_to_keep):
                     try:
                         os.remove(file_path)

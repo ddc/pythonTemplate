@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 import asyncpg
+from modules import utils
 
 
-class DBPostgreSQL:
+class PostgreSQLDB:
     def __init__(self, **kwargs):
         self.log = kwargs.get("log")
         self.host = kwargs.get("host")
@@ -20,7 +21,7 @@ class DBPostgreSQL:
             conn = await self._get_connection()
         except Exception as e:
             conn = None
-            self.log.error(f"PostgreSQL:({e.args})")
+            self.log.error(f"PostgreSQL:({utils.get_exception(e)})")
             # self.log.exception("PostgreSQL", exc_info=e)
             # raise asyncpg.ConnectionFailureError(e)
         return conn

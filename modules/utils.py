@@ -2,7 +2,7 @@
 import sys
 import os
 import configparser
-from modules import messages
+from modules import messages, constants
 from datetime import datetime, timedelta
 from cryptography.fernet import Fernet, InvalidToken
 
@@ -130,7 +130,7 @@ def convert_size(size_bytes):
 
 def list_files(directory, file_extension):
     files_list = [s for s in os.listdir(directory)
-                  if os.path.isfile(f"{directory}/{s}")
+                  if os.path.isfile(os.path.normpath(f"{directory}/{s}"))
                   and s.lower().endswith(file_extension.lower())]
     files_list.sort(key=os.path.getctime)
     return files_list
@@ -142,8 +142,8 @@ def list_files_bymask(directory, mask):
     rx = re.compile(mask)
     if os.path.isdir(directory):
         files_list = [f for f in os.listdir(directory)
-                      if os.path.isfile(f"{directory}/{f}") and rx.match(f)]
-        files_list.sort(key=lambda f: os.path.getctime(f"{directory}/{f}"))
+                      if os.path.isfile(os.path.normpath(f"{directory}/{f}")) and rx.match(f)]
+        files_list.sort(key=lambda f: os.path.getctime(os.path.normpath(f"{directory}/{f}")))
     return files_list
 
 
@@ -167,6 +167,14 @@ def get_hostname():
     except (ValueError, AttributeError):
         local_hostname = os.environ["COMPUTERNAME"]
     return local_hostname
+
+
+# def next_running_time(loop_time_seconds):
+#     formatter = f"{constants.TIME_FORMATTER}.%f"
+#     tdelta = timedelta(seconds=loop_time_seconds)
+#     now = datetime.now()
+#     next_exec = (now + tdelta).strftime(formatter)
+#     return next_exec
 
 
 def create_dirs(self, dirs):

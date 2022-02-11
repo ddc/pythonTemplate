@@ -1,17 +1,17 @@
 # -*- encoding: utf-8 -*-
 import sqlite3
-from modules import utils
+from modules import utils, constants
 
 
-class DBSQLite:
-    def __init__(self, log, sqlite_file):
-        self.log = log
-        self.sqlite_file = sqlite_file
+class SQLiteDB:
+    def __init__(self, **kwargs):
+        self.log = kwargs.get("log")
+        self.db_file = kwargs.get("sqlite_file", constants.SQLITE_FILE)
 
 
     def create_connection(self):
         try:
-            conn = sqlite3.connect(self.sqlite_file)
+            conn = sqlite3.connect(self.db_file)
         except Exception as e:
             conn = None
             self.log.error(f"[SQLite3]:{utils.get_exception(e)}")

@@ -4,7 +4,7 @@ import cx_Oracle
 from modules import utils, messages
 
 
-class DBOracle:
+class OracleDB:
     def __init__(self, **kwargs):
         self.batch_size = kwargs.get("batch_size", 10000)
         self.log = kwargs.get("log")
