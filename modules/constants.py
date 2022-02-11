@@ -28,6 +28,7 @@ MIN_PYTHON_VERSION = ".".join(str(x) for x in __req_python_version__)
 DATE_TIME_FORMATTER = "%Y-%m-%d %H:%M:%S.%f"
 DATE_FORMATTER = "%Y%m%d"
 TIME_FORMATTER = "%H%M%S-%f"
+DAYS_TO_KEEP_LOGS = 90
 DIR_LOGS = os.path.normpath("{}/logs".format(_script_path))
 SQLITE_FILE = os.path.normpath("{}/config/database.db".format(_script_path))
 CFG_FILE = os.path.normpath("{}/config/settings.ini".format(_script_path))
@@ -36,7 +37,7 @@ CFG_FILE = os.path.normpath("{}/config/settings.ini".format(_script_path))
 ################
 LINUX_SFTP_BIN = "/usr/bin/sftp"
 PKEY_FILE = os.path.expanduser("~/.ssh/id_rsa")
-SFTP_CONN_WAIT_TIME = 1.0
+SFTP_CONN_WAIT_TIME = 2.0
 ################
 # OPTIONALS
 ################

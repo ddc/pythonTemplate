@@ -9,7 +9,7 @@ from modules import utils, messages, constants
 class Log:
     def __init__(self, **kwargs):
         self.filename = kwargs.get("filename", None)
-        self.days_to_keep = int(kwargs.get("days_to_keep", 90))
+        self.days_to_keep = int(kwargs.get("days_to_keep", constants.DAYS_TO_KEEP_LOGS))
         self.level = logging.DEBUG if kwargs.get("debug") else logging.INFO
         self.dir = kwargs.get("dir", constants.DIR_LOGS)
 
@@ -23,10 +23,10 @@ class Log:
                              f"{self.dir}\n")
             sys.exit(1)
 
-        if not self.filename:
+        if self.filename is None:
             script_name, script_ext = os.path.splitext(sys.argv[0])
             self.filename = f"{os.path.basename(script_name)}.log"
-        log_file_path = f"{self.dir}/{self.filename}"
+        log_file_path = os.path.normpath(f"{self.dir}/{self.filename}")
 
         try:
             open(log_file_path, "a+").close()
@@ -40,7 +40,7 @@ class Log:
             formatt = f"[%(asctime)s.%(msecs)03d]:[%(levelname)s]:[PID:{os.getpid()}]:" \
                       f"[%(filename)s:%(funcName)s:%(lineno)d]:%(message)s"
         else:
-            formatt = "[%(asctime)s.%(msecs)03d]:[%(levelname)s]:%(message)s"
+            formatt = f"[%(asctime)s.%(msecs)03d]:[%(levelname)s]:[PID:{os.getpid()}]:%(message)s"
 
         formatter = logging.Formatter(formatt, datefmt="%Y-%m-%dT%H:%M:%S")
         logger = logging.getLogger()

@@ -44,7 +44,7 @@ class Log:
             formatt = "[%(asctime)s.%(msecs)03d]:[%(levelname)s]:[PID:{}]:" \
                       "[%(filename)s:%(funcName)s:%(lineno)d]:%(message)s".format(os.getpid())
         else:
-            formatt = "[%(asctime)s.%(msecs)03d]:[%(levelname)s]:%(message)s"
+            formatt = "[%(asctime)s.%(msecs)03d]:[%(levelname)s]:[PID:{}]:%(message)s".format(os.getpid())
 
         datefmt = "%Y-%m-%dT%H:%M:%S"
         log_formatter = logging.Formatter(formatt, datefmt=datefmt)
