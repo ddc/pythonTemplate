@@ -17,6 +17,7 @@ PASSW_OTHER_KEY_ERROR = f"{PASSW_DECODE_ERROR}:Password was encrypted with anoth
 PERMISSION_DENIED = "Permission denied"
 PASSWORD_HIDDEN_MSG = "HIDENPASSWORD"
 PERMISSION_CURRENT = "Current Permission"
+SET_UTIME_ERROR = "Nao foi possivel setar o timestamp do arquivo"
 # CHECKING_ARGUMENTS = "Checking arguments"
 # CHECKING_CONFIGS = "Checking settings"
 # INVALID_CHAR = "INVALID CHARACTER"
@@ -30,6 +31,22 @@ LOG_FILE_NOT_WRITABLE = f"[ERROR]:{EXITING}:UNABLE TO OPEN THE LOG FILE FOR WRIT
 LOG_COMPRESS_ERROR = "[ERROR]:UNABLE TO COMPRESS THE LOG FILE"
 LOG_RENAME_ERROR = "[ERROR]:UNABLE TO RENAME THE LOG FILE TO TODAY'S DATE"
 LOG_REMOVE_ERROR = "[ERROR]:UNABLE TO REMOVE THE LOG FILE"
+#################################
+# DATABASE
+#################################
+DB_CONN_STARTING = "Starting database connection"
+DB_CONN_CHECKING = "Checking database connection"
+DB_CONN_CREATE_ERROR = "Unable to create database connection"
+DB_CONN_ERROR = "Unable to establish connection to database server"
+DB_CONN_SUCCESS = "Database connection successfully established"
+DB_CONN_STRING = "Connection string"
+# DB_CONN_STRING_ERROR = "Database connection string error"
+# DB_CONN_CLOSING = "Closing database connection"
+# DB_COLL_STARTING = "Starting collection"
+# DB_COLL_NOT_FOUND = "Collection not found"
+# DB_TABLE_CHECKING = "Checking database tables"
+# DB_TABLE_EMPTY = "No data found in database"
+# DB_FILE_SQLITE_ERROR = "SQLite file not found"
 #################################
 # FILES
 #################################
@@ -58,22 +75,6 @@ DIR_CREATE_NO_PERMS = "Permission denied when creating directory"
 DIR_TMP_CREATE_ERROR = "Unable to create temporary directory for files that failed the upload"
 DIR_LOCAL_NOT_FOUND = f"{EXITING}:Local directory not found"
 #################################
-# DATABASE
-#################################
-DB_CONN_STARTING = "Starting database connection"
-DB_CONN_CHECKING = "Checking database connection"
-DB_CONN_CREATE_ERROR = "Unable to create database connection"
-DB_CONN_ERROR = "Unable to establish connection to database server"
-DB_CONN_SUCCESS = "Database connection successfully established"
-DB_CONN_STRING = "Connection string"
-# DB_CONN_STRING_ERROR = "Database connection string error"
-# DB_CONN_CLOSING = "Closing database connection"
-# DB_COLL_STARTING = "Starting collection"
-# DB_COLL_NOT_FOUND = "Collection not found"
-# DB_TABLE_CHECKING = "Checking database tables"
-# DB_TABLE_EMPTY = "No data found in database"
-# DB_FILE_SQLITE_ERROR = "SQLite file not found"
-#################################
 # SFTP
 #################################
 # SFTP_STARTING = "STARTING TRANSFERS"
@@ -100,9 +101,11 @@ SFTP_PKEY_NOT_FOUND = "Private key used for authentication not found"
 SFTP_REMOTE_DIR_NOT_FOUND = "Remote directory not found"
 # SFTP_REMOTE_FILE_FOUND = "Remote file found"
 # SFTP_REMOTE_FILE_RENAME_ERROR = "Unable to rename remote file"
+# SFTP_REMOTE_FILE_REMOVE_ERROR = "Unable to remove remote file"
 SFTP_BIN_NOT_FOUND = "SFTP not found"
-# SFTP_SET_UTIME_ERROR = "Unable to set file timestamp"
 # SFTP_RESEND_ERROR = "Unbale to resend the file"
+# SFTP_FILE_DOWNLOAD_ERROR = "Unbale to download the file"
+# SFTP_FILE_DOWNLOAD_CORRUPTED = "Corrupted file during download"
 SFTP_TRANSFERED = "TRANSFERED"
 #################################
 # PROGRAM

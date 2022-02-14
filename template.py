@@ -40,12 +40,14 @@ if __name__ == "__main__":
         sys.stderr.write(f"[ERROR]:{messages.EXITING}:"
                          f"{messages.CONFIG_FILE} {messages.NOT_FOUND}: {constants.CFG_FILE}\n")
         sys.exit(1)
+
     os.environ["COLUMNS"] = "200"
     parser = ArgumentParser(description=messages.PROGRAM_DESCRIPTION, add_help=True)
     parser.add_argument("-d", "--debug",
                         required=False,
                         action="store_true",
-                        help=f"{messages.HELP_DEBUG}")
+                        help=messages.HELP_DEBUG)
+
     args = parser.parse_args()
     settings_vars = utils.get_all_ini_file_settings(constants.CFG_FILE)
     settings_vars.update({"debug": args.debug})

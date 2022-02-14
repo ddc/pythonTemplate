@@ -16,6 +16,7 @@ PASSW_NOT_ENC_ERROR = f"{PASSW_DECODE_ERROR}:Senha nao esta encriptada"
 PASSW_OTHER_KEY_ERROR = f"{PASSW_DECODE_ERROR}:Senha foi encriptada com outra chave privada"
 PERMISSION_DENIED = "Permissao negada"
 PASSWORD_HIDDEN_MSG = "HIDENPASSWORD"
+SET_UTIME_ERROR = "Nao foi possivel setar o timestamp do arquivo"
 # CURRENT_PERMISSION = "Permissao atual"
 # CHECKING_ARGUMENTS = "Verificando argumentos"
 # INVALID_CHAR = "CARACTERE INVALIDO"
@@ -30,6 +31,22 @@ LOG_FILE_NOT_WRITABLE = f"[ERROR]:{EXITING}:NAO FOI POSSIVEL REALIZAR ESCRITA NO
 LOG_COMPRESS_ERROR = "[ERROR]:NAO FOI POSSIVEL COMPACTAR O ARQUIVO DE LOG"
 LOG_RENAME_ERROR = "[ERROR]:NAO FOI POSSIVEL RENOMEAR O ARQUIVO PARA A DATA DE HOJE"
 LOG_REMOVE_ERROR = "[ERROR]:NAO FOI POSSIVEL REMOVER O LOG"
+#################################
+# DATABASE
+#################################
+DB_CONN_STARTING = "Iniciando conexao com o banco de dados"
+DB_CONN_CHECKING = "Verificando conexao com o bancos de dados"
+DB_CONN_CREATE_ERROR = "Cannot Create Database Connection"
+DB_CONN_ERROR = "Nao foi possivel estabelecer conexao com o servidor de banco de dados"
+DB_CONN_SUCCESS = "Conexao com o banco de dados estabelecida com sucesso"
+DB_CONN_STRING = "String de conexao"
+# DB_CONN_STRING_ERROR = "Erro na string de conexao do banco de dados"
+# DB_CONN_CLOSING = "Encerrando conexao com o banco de dados"
+# DB_COLL_STARTING = "Iniciando collection"
+# DB_COLL_UNKNOWN = "Collection inexistente"
+# DB_TABLE_CHECKING = "Verificando as tabelas do banco de dados"
+# DB_TABLE_EMPTY = "Nao foram encontrados dados na database"
+# DB_FILE_SQLITE_ERROR = "Arquivo do sqlite nao encontrado"
 #################################
 # FILES
 #################################
@@ -58,22 +75,6 @@ DIR_CREATE_NO_PERMS = "Permissao negada ao criar diretorio"
 DIR_TMP_CREATE_ERROR = "Nao foi possivel criar o diretorio temporario para os arquivos que falharam a transmissao"
 DIR_LOCAL_NOT_FOUND = f"{EXITING}:Diretorio local inexistente"
 #################################
-# DATABASE
-#################################
-DB_CONN_STARTING = "Iniciando conexao com o banco de dados"
-DB_CONN_CHECKING = "Verificando conexao com o bancos de dados"
-DB_CONN_CREATE_ERROR = "Cannot Create Database Connection"
-DB_CONN_ERROR = "Nao foi possivel estabelecer conexao com o servidor de banco de dados"
-DB_CONN_SUCCESS = "Conexao com o banco de dados estabelecida com sucesso"
-DB_CONN_STRING = "String de conexao"
-# DB_CONN_STRING_ERROR = "Erro na string de conexao do banco de dados"
-# DB_CONN_CLOSING = "Encerrando conexao com o banco de dados"
-# DB_COLL_STARTING = "Iniciando collection"
-# DB_COLL_UNKNOWN = "Collection inexistente"
-# DB_TABLE_CHECKING = "Verificando as tabelas do banco de dados"
-# DB_TABLE_EMPTY = "Nao foram encontrados dados na database"
-# DB_FILE_SQLITE_ERROR = "Arquivo do sqlite nao encontrado"
-#################################
 # SFTP
 #################################
 # SFTP_INIT = "INICIANDO TRANSFERENCIA"
@@ -83,7 +84,6 @@ DB_CONN_STRING = "String de conexao"
 # SFTP_CONN_STRING_ERROR = "Erro na string de conexao do SFTP"
 # SFTP_CONN_SUCCESS = "Conexao estabelecida com sucesso"
 SFTP_CONN_ERROR = "Nao foi possivel estabelecer conexao com o servidor"
-# SFTP_TRANSFER_INIT = "Iniciando transferencia"
 SFTP_TRANSFER_ERROR = "Nao foi possivel transferir o arquivo"
 # SFTP_PASSW_LOGIN_ERROR = "Nao foi possivel autenticar por senha"
 # SFTP_PKEY_LOGIN_ERROR = "Nao foi possivel autenticar por chave privada"
@@ -101,9 +101,11 @@ SFTP_PKEY_NOT_FOUND = "Chave privada usada para a autenticacao nao encontrada"
 SFTP_REMOTE_DIR_NOT_FOUND = "Diretorio remoto inexistente"
 # SFTP_REMOTE_FILE_FOUND = "Arquivo remoto ja existente"
 # SFTP_REMOTE_FILE_RENAME_ERROR = "Nao foi possivel renomear o arquivo remoto"
+#SFTP_REMOTE_FILE_REMOVE_ERROR = "Nao foi possivel remover o arquivo remoto"
 SFTP_BIN_NOT_FOUND = "Executavel nao encontrado"
-# SFTP_SET_UTIME_ERROR = "Nao foi possivel setar o timestamp do arquivo"
 # SFTP_RESEND_ERROR = "Nao sera possivel reenviar o arquivo"
+# SFTP_FILE_DOWNLOAD_ERROR = "Nao foi possivel baixar o arquivo"
+# SFTP_FILE_DOWNLOAD_CORRUPTED = "Arquivo corrompido durante o download"
 SFTP_TRANSFERED = "TRANSFERIDO"
 #################################
 # PROGRAM
