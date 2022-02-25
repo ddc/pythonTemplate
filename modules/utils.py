@@ -114,7 +114,7 @@ def get_exception(e):
         module_and_exception = f"{e.__class__.__name__}:{e}"
     else:
         module_and_exception = f"{module}.{e.__class__.__name__}:{e}"
-    return module_and_exception
+    return module_and_exception.replace("\r\n", " ").replace("\n", " ")
 
 
 def convert_size(size_bytes):
@@ -129,9 +129,9 @@ def convert_size(size_bytes):
 
 
 def list_files(directory, file_extension):
-    files_list = [s for s in os.listdir(directory)
-                  if os.path.isfile(os.path.join(directory, s))
-                  and s.lower().endswith(file_extension.lower())]
+    files_list = [f for f in os.listdir(directory)
+                  if os.path.isfile(os.path.join(directory, f))
+                  and f.lower().endswith(file_extension.lower())]
     files_list.sort(key=os.path.getctime)
     return files_list
 
