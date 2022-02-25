@@ -130,7 +130,7 @@ def convert_size(size_bytes):
 
 def list_files(directory, file_extension):
     files_list = [s for s in os.listdir(directory)
-                  if os.path.isfile(os.path.normpath(f"{directory}/{s}"))
+                  if os.path.isfile(os.path.join(directory, s))
                   and s.lower().endswith(file_extension.lower())]
     files_list.sort(key=os.path.getctime)
     return files_list
@@ -142,8 +142,8 @@ def list_files_bymask(directory, mask):
     rx = re.compile(mask)
     if os.path.isdir(directory):
         files_list = [f for f in os.listdir(directory)
-                      if os.path.isfile(os.path.normpath(f"{directory}/{f}")) and rx.match(f)]
-        files_list.sort(key=lambda f: os.path.getctime(os.path.normpath(f"{directory}/{f}")))
+                      if os.path.isfile(os.path.join(directory, f)) and rx.match(f)]
+        files_list.sort(key=lambda f: os.path.getctime(os.path.join(directory, f)))
     return files_list
 
 
@@ -181,7 +181,8 @@ def create_dirs(self, dirs):
     try:
         os.makedirs(dirs, exist_ok=True) if not os.path.isdir(dirs) else None
     except OSError as e:
-        self.log.error(f"{messages.DIR_CREATE_NO_PERMS}:{get_exception(e)}: {dirs}\n")
+        self.log.error(f"{messages.DIR_CREATE_NO_PERMS}:{get_exception(e)}: "
+                       f"{os.path.normpath(dirs)}")
         return False
     return True
 
@@ -190,7 +191,8 @@ def remove_file(self, file_path):
     try:
         os.remove(file_path) if os.path.isfile(file_path) else None
     except Exception as e:
-        self.log.error(f"{messages.FILE_REMOVE_ERROR}:{get_exception(e)}: {file_path}\n")
+        self.log.error(f"{messages.FILE_REMOVE_ERROR}:{get_exception(e)}: "
+                       f"{os.path.normpath(file_path)}")
         return False
     return True
 
@@ -199,7 +201,8 @@ def rename_file(self, src_file_path, dst_file_path):
     try:
         os.rename(src_file_path, dst_file_path) if os.path.isfile(src_file_path) else None
     except Exception as e:
-        self.log.error(f"{messages.FILE_RENAME_ERROR}:{get_exception(e)}: {src_file_path} -> {dst_file_path}")
+        self.log.error(f"{messages.FILE_RENAME_ERROR}:{get_exception(e)}: "
+                       f"{os.path.normpath(src_file_path)} -> {os.path.normpath(dst_file_path)}")
         return False
     return True
 
@@ -209,6 +212,7 @@ def copy_file(self, src_file_path, dst_file_path):
         import shutil
         shutil.copy2(src_file_path, dst_file_path) if os.path.isfile(src_file_path) else None
     except Exception as e:
-        self.log.error(f"{messages.FILE_COPY_ERROR}:{get_exception(e)}: {src_file_path} -> {dst_file_path}")
+        self.log.error(f"{messages.FILE_COPY_ERROR}:{get_exception(e)}: "
+                       f"{os.path.normpath(src_file_path)} -> {os.path.normpath(dst_file_path)}")
         return False
     return True

@@ -12,7 +12,7 @@ __req_python_version__ = (3, 6, 0)
 
 _script_path = Path(os.path.dirname(sys.argv[0])).absolute()
 try:
-    TMP_DIR = os.path.normpath(f"{_script_path}/tmp")
+    TMP_DIR = os.path.join(_script_path, "tmp")
     os.makedirs(TMP_DIR) if not os.path.isdir(TMP_DIR) else None
 except OSError:
     TMP_DIR = "/tmp"
@@ -24,10 +24,10 @@ MIN_PYTHON_VERSION = ".".join(str(x) for x in __req_python_version__)
 DATE_TIME_FORMATTER = "%Y-%m-%d %H:%M:%S.%f"
 DATE_FORMATTER = "%Y%m%d"
 TIME_FORMATTER = "%H%M%S-%f"
+DIR_LOGS = os.path.join(_script_path, "logs")
+SQLITE_FILE = os.path.join(_script_path, "config", "database.db")
+CFG_FILE = os.path.join(_script_path, "config", "settings.ini")
 DAYS_TO_KEEP_LOGS = 90
-DIR_LOGS = os.path.normpath(f"{_script_path}/logs")
-SQLITE_FILE = os.path.normpath(f"{_script_path}/config/database.db")
-CFG_FILE = os.path.normpath(f"{_script_path}/config/settings.ini")
 
 # SFTP
 LINUX_SFTP_BIN = "/usr/bin/sftp"
@@ -37,6 +37,6 @@ SFTP_CONN_WAIT_TIME = 2.0
 # OPTIONALS
 #IS_WINDOWS = True if os.name == "nt" else False
 #CPU_COUNT = os.cpu_count() if int(os.cpu_count()) < 4 else 4
-#PID_FILE = os.path.normpath(f"{TMP_DIR}/pidFile.pid")
+PID_FILE = os.path.join(TMP_DIR, "pidFile.pid")
 
 # PROGRAM

@@ -20,20 +20,20 @@ class Log:
         except OSError as e:
             sys.stderr.write(f"{messages.LOGS_DIR_NOT_FOUND}:"
                              f"{utils.get_exception(e)}: "
-                             f"{self.dir}\n")
+                             f"{os.path.normpath(self.dir)}\n")
             sys.exit(1)
 
         if self.filename is None:
             script_name, script_ext = os.path.splitext(sys.argv[0])
             self.filename = f"{os.path.basename(script_name)}.log"
-        log_file_path = os.path.normpath(f"{self.dir}/{self.filename}")
+        log_file_path = os.path.join(self.dir, self.filename)
 
         try:
             open(log_file_path, "a+").close()
         except IOError as e:
             sys.stderr.write(f"{messages.LOG_FILE_NOT_WRITABLE}:"
                              f"{utils.get_exception(e)}: "
-                             f"{log_file_path}\n")
+                             f"{os.path.normpath(log_file_path)}\n")
             sys.exit(1)
 
         if self.level == logging.DEBUG:
@@ -81,7 +81,7 @@ class GZipRotator:
             except Exception as e:
                 sys.stderr.write(f"{messages.LOG_COMPRESS_ERROR}:"
                                  f"{utils.get_exception(e)}: "
-                                 f"{source}\n")
+                                 f"{os.path.normpath(source)}\n")
                 return
 
             try:
@@ -89,21 +89,21 @@ class GZipRotator:
             except OSError as e:
                 sys.stderr.write(f"{messages.LOG_REMOVE_ERROR}:"
                                  f"{utils.get_exception(e)}: "
-                                 f"{source}\n")
+                                 f"{os.path.normpath(source)}\n")
 
 
 class RemoveOldLogs:
     def __init__(self, dir_logs, days_to_keep):
         if os.path.isdir(dir_logs):
             files_list = [f for f in os.listdir(dir_logs)
-                          if os.path.isfile(os.path.normpath(f"{dir_logs}/{f}"))
+                          if os.path.isfile(os.path.join(dir_logs, f))
                           and f.lower().endswith(".gz")]
             for file in files_list:
-                file_path = os.path.normpath(f"{dir_logs}/{file}")
+                file_path = os.path.join(dir_logs, file)
                 if utils.is_file_older_than_x_days(file_path, days_to_keep):
                     try:
                         os.remove(file_path)
                     except OSError as e:
                         sys.stderr.write(f"{messages.LOG_REMOVE_ERROR}:"
                                          f"{utils.get_exception(e)}: "
-                                         f"{file_path}\n")
+                                         f"{os.path.normpath(file_path)}\n")
