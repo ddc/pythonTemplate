@@ -26,7 +26,7 @@ SET_UTIME_ERROR = "Nao foi possivel setar o timestamp do arquivo"
 #################################
 # LOGS
 #################################
-LOGS_DIR_NOT_FOUND = f"[ERROR]:{EXITING}:UNABLE TO CREATE LOGS DIRECTORY"
+LOG_DIR_NOT_FOUND = f"[ERROR]:{EXITING}:UNABLE TO CREATE LOGS DIRECTORY"
 LOG_FILE_NOT_WRITABLE = f"[ERROR]:{EXITING}:UNABLE TO OPEN THE LOG FILE FOR WRITING"
 LOG_COMPRESS_ERROR = "[ERROR]:UNABLE TO COMPRESS THE LOG FILE"
 LOG_RENAME_ERROR = "[ERROR]:UNABLE TO RENAME THE LOG FILE TO TODAY'S DATE"
@@ -42,7 +42,7 @@ DB_CONN_SUCCESS = "Database connection successfully established"
 DB_CONN_STRING = "Connection string"
 # DB_CONN_STRING_ERROR = "Database connection string error"
 # DB_CONN_CLOSING = "Closing database connection"
-# DB_COLL_STARTING = "Starting collection"
+DB_COLL_STARTING = "Starting collection"
 # DB_COLL_NOT_FOUND = "Collection not found"
 # DB_TABLE_CHECKING = "Checking database tables"
 # DB_TABLE_EMPTY = "No data found in database"
@@ -57,7 +57,7 @@ FILE_REMOVE_ERROR = "Unable to remove the file"
 # FILE_UNZIP = "Unzipping the file"
 # FILE_UNZIP_ERROR = "Unable to unzip the file"
 # FILE_CLOSING = "Closing the file"
-# FILE_MOVE_ERROR = "Unable to move the file"
+FILE_MOVE_ERROR = "Unable to move the file"
 FILE_COPY_ERROR = "Unable to copy the file"
 FILE_RENAME_ERROR = "Unable to rename the file"
 FILE_REPLACE_DENIED = "Permission denied when replacing the file"
@@ -65,6 +65,7 @@ FILE_REPLACE_DENIED = "Permission denied when replacing the file"
 # FILE_RESENDING = "Resending the file"
 # FILE_SAVED_RESEND = "File saved to be sent later"
 # FILE_SAVED_RESEND_ERROR = "Unable to save file to resend later"
+# FILE_SEND_ERROR = "Unable to send file"
 #################################
 # DIRS
 #################################
@@ -74,6 +75,7 @@ FILE_REPLACE_DENIED = "Permission denied when replacing the file"
 DIR_CREATE_NO_PERMS = "Permission denied when creating directory"
 DIR_TMP_CREATE_ERROR = "Unable to create temporary directory for files that failed the upload"
 DIR_LOCAL_NOT_FOUND = f"{EXITING}:Local directory not found"
+DIR_REMOVE_ERROR = "Unable to remove directory"
 #################################
 # SFTP
 #################################

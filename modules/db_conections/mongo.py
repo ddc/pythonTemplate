@@ -15,7 +15,7 @@ class MongoUtils:
         self.user = kwargs.get("user")
         self.password = kwargs.get("password")
         self.schema = kwargs.get("schema")
-        self.collections = kwargs.get("collections")
+        self.collections = kwargs.get("collections") # list
         self.authsource = kwargs.get("authsource", None)
         self.batch_size = kwargs.get("batch_size", 0)
         self.limit = kwargs.get("limit", 0)
@@ -58,6 +58,8 @@ class MongoUtils:
 
 
     def get_cursor(self, connection, query, collection, sort_column=None, sort_direction=None):
+        self.log.debug(f"{self.init_log_msg}:{messages.DB_COLL_STARTING}: {collection}")
+        self.log.debug(f"{self.init_log_msg}:Query: {query}")
         col = connection[self.schema][collection]
         if sort_column is not None and sort_direction is not None:
             sort_direction = DESCENDING if sort_direction.lower() in ["descending", "desc"] else ASCENDING
@@ -70,6 +72,7 @@ class MongoUtils:
     def _get_connection_string(self):
         import re
         if self.user is not None and self.password is not None and len(self.user) > 0 and len(self.password) > 0:
+            self.password = utils.decode(self.log, self.password)
             conn_string = f"mongodb://{self.user}:{self.password}@{self.host}:{self.port}/{self.schema}"
         else:
             conn_string = f"mongodb://{self.host}:{self.port}/{self.schema}"

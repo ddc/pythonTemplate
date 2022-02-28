@@ -18,7 +18,7 @@ class Log:
         try:
             os.makedirs(self.dir, exist_ok=True) if not os.path.isdir(self.dir) else None
         except OSError as e:
-            sys.stderr.write(f"{messages.LOGS_DIR_NOT_FOUND}:"
+            sys.stderr.write(f"{messages.LOG_DIR_NOT_FOUND}:"
                              f"{utils.get_exception(e)}: "
                              f"{os.path.normpath(self.dir)}\n")
             sys.exit(1)

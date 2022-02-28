@@ -26,7 +26,7 @@ SET_UTIME_ERROR = "Nao foi possivel setar o timestamp do arquivo"
 #################################
 # LOGS
 #################################
-LOGS_DIR_NOT_FOUND = f"[ERROR]:{EXITING}:NAO FOI POSSIVEL CRIAR DIRETORIO DE LOGS"
+LOG_DIR_NOT_FOUND = f"[ERROR]:{EXITING}:NAO FOI POSSIVEL CRIAR DIRETORIO DE LOGS"
 LOG_FILE_NOT_WRITABLE = f"[ERROR]:{EXITING}:NAO FOI POSSIVEL REALIZAR ESCRITA NO ARQUIVO DE LOG"
 LOG_COMPRESS_ERROR = "[ERROR]:NAO FOI POSSIVEL COMPACTAR O ARQUIVO DE LOG"
 LOG_RENAME_ERROR = "[ERROR]:NAO FOI POSSIVEL RENOMEAR O ARQUIVO PARA A DATA DE HOJE"
@@ -42,7 +42,7 @@ DB_CONN_SUCCESS = "Conexao com o banco de dados estabelecida com sucesso"
 DB_CONN_STRING = "String de conexao"
 # DB_CONN_STRING_ERROR = "Erro na string de conexao do banco de dados"
 # DB_CONN_CLOSING = "Encerrando conexao com o banco de dados"
-# DB_COLL_STARTING = "Iniciando collection"
+DB_COLL_STARTING = "Iniciando collection"
 # DB_COLL_UNKNOWN = "Collection inexistente"
 # DB_TABLE_CHECKING = "Verificando as tabelas do banco de dados"
 # DB_TABLE_EMPTY = "Nao foram encontrados dados na database"
@@ -65,12 +65,14 @@ FILE_REPLACE_DENIED = "Permissao negada ao substituir"
 # FILE_RESENDING = "Enviando novamente o arquivo"
 # FILE_SAVED_RESEND = "Arquivo salvo para ser enviado posteriormente"
 # FILE_SAVED_RESEND_ERROR = "Nao foi possivel salvar o arquivo para ser reenviado"
+# FILE_SEND_ERROR = "Nao foi possivel enviar o arquivo"
 #################################
 # DIRS
 #################################
 # DIR_CREATING = "Criando diretorio"
 # DIR_NOT_FOUND = "Diretorio inexistente"
 # DIR_CREATE_ERROR = "Nao foi possivel criar o diretorio"
+# DIR_REMOVE_ERROR = "Nao foi possivel remover o diretorio"
 DIR_CREATE_NO_PERMS = "Permissao negada ao criar diretorio"
 DIR_TMP_CREATE_ERROR = "Nao foi possivel criar o diretorio temporario para os arquivos que falharam a transmissao"
 DIR_LOCAL_NOT_FOUND = f"{EXITING}:Diretorio local inexistente"

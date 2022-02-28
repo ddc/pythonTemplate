@@ -20,7 +20,7 @@ class Log:
         try:
             os.makedirs(self.dir) if not os.path.isdir(self.dir) else None
         except Exception as e:
-            sys.stderr.write("{}:{}: {}\n".format(messages.LOGS_DIR_NOT_FOUND,
+            sys.stderr.write("{}:{}: {}\n".format(messages.LOG_DIR_NOT_FOUND,
                                                   utils.get_exception(e),
                                                   os.path.normpath(self.dir)))
             sys.exit(1)

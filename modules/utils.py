@@ -16,9 +16,9 @@ def decode(log, encoded_text):
     log.debug(f"{messages.PASSW_DECODING}")
     if encoded_text is not None and len(encoded_text) > 0:
         private_key = "sMZo38VwRdigN78FBnHj8mETNlofL4Qhj_x5cvyxJsc="
-        cipher_suite = Fernet(bytes(private_key))
+        cipher_suite = Fernet(bytes(private_key, "UTF-8"))
         try:
-            bet = bytes(encoded_text)
+            bet = bytes(encoded_text, "UTF-8")
             decoded_text = cipher_suite.decrypt(bet).decode("UTF-8")
             return str(decoded_text)
         except InvalidToken:
@@ -187,6 +187,17 @@ def create_dirs(self, dirs):
     return True
 
 
+def remove_dir(self, dir_path):
+    import shutil
+    try:
+        shutil.rmtree(dir_path, ignore_errors=True) if os.path.isdir(dir_path) else None
+    except Exception as e:
+        self.log.error(f"{messages.DIR_REMOVE_ERROR}:{get_exception(e)}: "
+                       f"{os.path.normpath(dir_path)}")
+        return False
+    return True
+
+
 def remove_file(self, file_path):
     try:
         os.remove(file_path) if os.path.isfile(file_path) else None
@@ -213,6 +224,19 @@ def copy_file(self, src_file_path, dst_file_path):
         shutil.copy2(src_file_path, dst_file_path) if os.path.isfile(src_file_path) else None
     except Exception as e:
         self.log.error(f"{messages.FILE_COPY_ERROR}:{get_exception(e)}: "
+                       f"{os.path.normpath(src_file_path)} -> {os.path.normpath(dst_file_path)}")
+        return False
+    return True
+
+
+def move_file(self, src_file_path, dst_path):
+    dst_file_path = os.path.join(dst_path, os.path.basename(src_file_path))
+
+    try:
+        import shutil
+        shutil.move(src_file_path, dst_file_path) if os.path.isfile(src_file_path) else None
+    except Exception as e:
+        self.log.error(f"{messages.FILE_MOVE_ERROR}:{get_exception(e)}: "
                        f"{os.path.normpath(src_file_path)} -> {os.path.normpath(dst_file_path)}")
         return False
     return True
