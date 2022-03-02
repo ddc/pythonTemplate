@@ -9,9 +9,9 @@ from modules import utils, messages, constants
 class Log:
     def __init__(self, **kwargs):
         self.filename = kwargs.get("filename", None)
-        self.days_to_keep = int(kwargs.get("days_to_keep", constants.DAYS_TO_KEEP_LOGS))
-        self.level = logging.DEBUG if kwargs.get("debug") else logging.INFO
         self.dir = kwargs.get("dir", constants.DIR_LOGS)
+        self.level = logging.DEBUG if kwargs.get("debug") else logging.INFO
+        self.days_to_keep = int(kwargs.get("days_to_keep", constants.DAYS_TO_KEEP_LOGS))
 
 
     def setup_logging(self):

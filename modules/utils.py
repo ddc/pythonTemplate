@@ -132,7 +132,7 @@ def list_files(directory, file_extension):
     files_list = [f for f in os.listdir(directory)
                   if os.path.isfile(os.path.join(directory, f))
                   and f.lower().endswith(file_extension.lower())]
-    files_list.sort(key=os.path.getctime)
+    files_list.sort(key=os.path.getmtime)
     return files_list
 
 
@@ -143,7 +143,7 @@ def list_files_bymask(directory, mask):
     if os.path.isdir(directory):
         files_list = [f for f in os.listdir(directory)
                       if os.path.isfile(os.path.join(directory, f)) and rx.match(f)]
-        files_list.sort(key=lambda f: os.path.getctime(os.path.join(directory, f)))
+        files_list.sort(key=lambda f: os.path.getmtime(os.path.join(directory, f)))
     return files_list
 
 
