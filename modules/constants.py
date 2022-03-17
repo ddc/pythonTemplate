@@ -15,7 +15,8 @@ try:
     TMP_DIR = os.path.join(_script_path, "tmp")
     os.makedirs(TMP_DIR) if not os.path.isdir(TMP_DIR) else None
 except OSError:
-    TMP_DIR = "/tmp"
+    import tempfile
+    TMP_DIR = tempfile.TemporaryDirectory()
 
 # MAIN
 VERSION = __version__
