@@ -27,8 +27,8 @@ class Template:
 
         main.start(self)
 
-        total_segundos = round(timer() - start_timer, 3)
-        self.log.info(f"[{messages.FINISHED}]:{messages.TOTAL_SECONDS}: {total_segundos}")
+        total_seconds = round(timer() - start_timer, 3)
+        self.log.info(f"[{messages.FINISHED}]:{messages.TOTAL_SECONDS}: {total_seconds}")
 
 
 if __name__ == "__main__":

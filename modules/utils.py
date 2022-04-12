@@ -150,6 +150,14 @@ def list_files_bymask(directory, mask):
     return files_list
 
 
+def remove_dup_list(lst):
+    q = deque([])
+    for v in lst:
+        if isinstance(v, str) and v not in q:
+            q.append(v)
+    return q
+
+
 def format_path_dates(var, date):
     if var is not None and date is not None:
         var = var.replace("F", date.strftime("%f")[:-3])\
@@ -184,7 +192,7 @@ def create_dirs(self, dirs):
     try:
         os.makedirs(dirs, exist_ok=True) if not os.path.isdir(dirs) else None
     except OSError as e:
-        self.log.error(f"{messages.DIR_CREATE_NO_PERMS}:{get_exception(e)}: "
+        self.log.error(f"{messages.DIR_CREATE_ERROR}:{get_exception(e)}: "
                        f"{os.path.normpath(dirs)}")
         return False
     return True
