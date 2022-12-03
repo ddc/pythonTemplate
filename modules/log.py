@@ -11,12 +11,14 @@ class Log:
         self.filename = kwargs.get("filename", None)
         self.dir = kwargs.get("dir", constants.DIR_LOGS)
         self.level = logging.DEBUG if kwargs.get("debug") else logging.INFO
-        self.days_to_keep = int(kwargs.get("days_to_keep", constants.DAYS_TO_KEEP_LOGS))
+        self.days_to_keep = int(kwargs.get("days_to_keep",
+                                           constants.DAYS_TO_KEEP_LOGS))
 
 
     def setup_logging(self):
         try:
-            os.makedirs(self.dir, exist_ok=True) if not os.path.isdir(self.dir) else None
+            os.makedirs(self.dir,
+                        exist_ok=True) if not os.path.isdir(self.dir) else None
         except OSError as e:
             sys.stderr.write(f"{messages.LOG_DIR_NOT_FOUND}:"
                              f"{utils.get_exception(e)}: "
@@ -37,18 +39,21 @@ class Log:
             sys.exit(1)
 
         if self.level == logging.DEBUG:
-            formatt = f"[%(asctime)s.%(msecs)03d]:[%(levelname)s]:[PID:{os.getpid()}]:" \
+            formatt = f"[%(asctime)s.%(msecs)03d]:[%(levelname)s]:" \
+                      f"[PID:{os.getpid()}]:" \
                       f"[%(filename)s:%(funcName)s:%(lineno)d]:%(message)s"
         else:
-            formatt = f"[%(asctime)s.%(msecs)03d]:[%(levelname)s]:[PID:{os.getpid()}]:%(message)s"
+            formatt = f"[%(asctime)s.%(msecs)03d]:[%(levelname)s]:" \
+                      f"[PID:{os.getpid()}]:%(message)s"
 
         formatter = logging.Formatter(formatt, datefmt="%Y-%m-%dT%H:%M:%S")
         logger = logging.getLogger()
         logger.setLevel(self.level)
-        file_hdlr = logging.handlers.TimedRotatingFileHandler(filename=log_file_path,
-                                                              encoding="UTF-8",
-                                                              when="midnight",
-                                                              backupCount=self.days_to_keep)
+        file_hdlr = logging.handlers.TimedRotatingFileHandler(
+            filename=log_file_path,
+            encoding="UTF-8",
+            when="midnight",
+            backupCount=self.days_to_keep)
 
         file_hdlr.setFormatter(formatter)
         file_hdlr.suffix = "%Y%m%d"

@@ -14,7 +14,6 @@ class OracleDB:
         self.password = kwargs.get("password")
         self.tablename = kwargs.get("tablename").upper()
 
-
     def create_engine(self):
         dialect = "oracle"
         sql_driver = "cx_oracle"
@@ -33,16 +32,21 @@ class OracleDB:
                     (METHOD=basic))))"""
 
         try:
-            engine_path_win_auth = f"{dialect}+{sql_driver}://{self.username}:{self.password}@{tns}"
-            engine = create_engine(engine_path_win_auth,
-                                   max_identifier_length=128).execution_options(isolation_level="AUTOCOMMIT")
+            engine_path_win_auth = f"{dialect}+{sql_driver}://" \
+                                   f"{self.username}:" \
+                                   f"{self.password}@{tns}"
+            engine = create_engine(
+                engine_path_win_auth,
+                max_identifier_length=128
+            ).execution_options(isolation_level="AUTOCOMMIT")
             return engine
         except Exception as e:
-            self.log.error(f"{messages.DB_CONN_ERROR}:[{utils.get_exception(e)}]: "
-                           f"(host={self.host}, port={self.port}, "
-                           f"servicename={self.servicename}, username={self.username})")
+            self.log.error(
+                f"{messages.DB_CONN_ERROR}:[{utils.get_exception(e)}]: "
+                f"(host={self.host}, port={self.port}, "
+                f"servicename={self.servicename}, username={self.username})"
+            )
             return None
-
 
     def insert(self, table, values: dict):
         self.log.debug(f"[ORA]:[insert]:{table}:{values}")

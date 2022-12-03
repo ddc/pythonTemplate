@@ -40,8 +40,14 @@ def is_file_older_than_x_days(file_path, xdays):
         cutoff_time = datetime.today()
     else:
         cutoff_time = datetime.today() - timedelta(days=int(xdays))
-    file_time = file_time.replace(hour=0, minute=0, second=0, microsecond=0)
-    cutoff_time = cutoff_time.replace(hour=0, minute=0, second=0, microsecond=0)
+    file_time = file_time.replace(hour=0,
+                                  minute=0,
+                                  second=0,
+                                  microsecond=0)
+    cutoff_time = cutoff_time.replace(hour=0,
+                                      minute=0,
+                                      second=0,
+                                      microsecond=0)
     if file_time < cutoff_time:
         return True
     return False
@@ -117,6 +123,18 @@ def get_exception(e):
     return module_and_exception.replace("\r\n", " ").replace("\n", " ")
 
 
+def search_inside_list(lst, el):
+    found = False
+    idx = -1
+    if el is not None and len(lst) > 0:
+        for idx, v in enumerate(lst):
+            for i, p in enumerate(v):
+                if p[0] == el:
+                    found = True
+                    break
+    return [found, idx]
+
+
 def convert_size(size_bytes):
     import math
     if size_bytes == 0:
@@ -144,13 +162,15 @@ def list_files_bymask(directory, mask):
     rx = re.compile(mask)
     if os.path.isdir(directory):
         files_list = [os.path.join(directory, f) for f in os.listdir(directory)
-                      if os.path.isfile(os.path.join(directory, f))
-                      and rx.match(f)]
-        files_list.sort(key=lambda f: os.path.getmtime(os.path.join(directory, f)))
+                      if os.path.isfile(os.path.join(directory,
+                                                     f)) and rx.match(f)]
+        files_list.sort(key=lambda f: os.path.getmtime(os.path.join(directory,
+                                                                    f)))
     return files_list
 
 
 def remove_dup_list(lst):
+    from collections import deque
     q = deque([])
     for v in lst:
         if isinstance(v, str) and v not in q:
@@ -161,10 +181,10 @@ def remove_dup_list(lst):
 def format_path_dates(var, date):
     if var is not None and date is not None:
         var = var.replace("F", date.strftime("%f")[:-3])\
-                 .replace("HHMMSS", date.strftime("%H%M%S"))\
-                 .replace("DD", date.strftime("%d"))\
-                 .replace("MM", date.strftime("%m"))\
-                 .replace("YYYY", date.strftime("%Y"))
+            .replace("HHMMSS", date.strftime("%H%M%S"))\
+            .replace("DD", date.strftime("%d"))\
+            .replace("MM", date.strftime("%m"))\
+            .replace("YYYY", date.strftime("%Y"))
         if date.month <= 6:
             var = var.replace("SE", date.strftime("01"))
         else:
@@ -181,10 +201,10 @@ def get_hostname():
 
 
 # def next_running_time(loop_time_seconds):
-#     formatter = f"{constants.TIME_FORMATTER}.%f"
+#     time_formatter = "%H:%M:%S.%f"
 #     tdelta = timedelta(seconds=loop_time_seconds)
 #     now = datetime.now()
-#     next_exec = (now + tdelta).strftime(formatter)
+#     next_exec = (now + tdelta).strftime(time_formatter)
 #     return next_exec
 
 
@@ -201,7 +221,8 @@ def create_dirs(self, dirs):
 def remove_dir(self, dir_path):
     import shutil
     try:
-        shutil.rmtree(dir_path, ignore_errors=True) if os.path.isdir(dir_path) else None
+        shutil.rmtree(dir_path,
+                      ignore_errors=True) if os.path.isdir(dir_path) else None
     except Exception as e:
         self.log.error(f"{messages.DIR_REMOVE_ERROR}:{get_exception(e)}: "
                        f"{os.path.normpath(dir_path)}")
@@ -221,10 +242,12 @@ def remove_file(self, file_path):
 
 def rename_file(self, src_file_path, dst_file_path):
     try:
-        os.rename(src_file_path, dst_file_path) if os.path.isfile(src_file_path) else None
+        os.rename(src_file_path,
+                  dst_file_path) if os.path.isfile(src_file_path) else None
     except Exception as e:
         self.log.error(f"{messages.FILE_RENAME_ERROR}:{get_exception(e)}: "
-                       f"{os.path.normpath(src_file_path)} -> {os.path.normpath(dst_file_path)}")
+                       f"{os.path.normpath(src_file_path)} -> "
+                       f"{os.path.normpath(dst_file_path)}")
         return False
     return True
 
@@ -232,10 +255,12 @@ def rename_file(self, src_file_path, dst_file_path):
 def copy_file(self, src_file_path, dst_file_path):
     try:
         import shutil
-        shutil.copy2(src_file_path, dst_file_path) if os.path.isfile(src_file_path) else None
+        shutil.copy2(src_file_path, dst_file_path) if os.path.isfile(
+            src_file_path) else None
     except Exception as e:
         self.log.error(f"{messages.FILE_COPY_ERROR}:{get_exception(e)}: "
-                       f"{os.path.normpath(src_file_path)} -> {os.path.normpath(dst_file_path)}")
+                       f"{os.path.normpath(src_file_path)} -> "
+                       f"{os.path.normpath(dst_file_path)}")
         return False
     return True
 
@@ -245,9 +270,11 @@ def move_file(self, src_file_path, dst_path):
 
     try:
         import shutil
-        shutil.move(src_file_path, dst_file_path) if os.path.isfile(src_file_path) else None
+        shutil.move(src_file_path, dst_file_path) if os.path.isfile(
+            src_file_path) else None
     except Exception as e:
         self.log.error(f"{messages.FILE_MOVE_ERROR}:{get_exception(e)}: "
-                       f"{os.path.normpath(src_file_path)} -> {os.path.normpath(dst_file_path)}")
+                       f"{os.path.normpath(src_file_path)} -> "
+                       f"{os.path.normpath(dst_file_path)}")
         return False
     return True

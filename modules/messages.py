@@ -71,7 +71,7 @@ FILE_REPLACE_DENIED = "Permission denied when replacing the file"
 #################################
 # DIR_CREATING = "Creating directory"
 # DIR_NOT_FOUND = "Directory not found"
-# DIR_CREATE_ERROR = "Unable to create directory"
+DIR_CREATE_ERROR = "Unable to create directory"
 DIR_CREATE_NO_PERMS = "Permission denied when creating directory"
 DIR_TMP_CREATE_ERROR = "Unable to create temporary directory for files that failed the upload"
 DIR_LOCAL_NOT_FOUND = f"{EXITING}:Local directory not found"

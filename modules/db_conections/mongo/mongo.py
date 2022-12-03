@@ -28,7 +28,9 @@ class MongoUtils:
 
     def get_db_connection(self):
         self.log.debug(f"{self.init_log_msg}:{messages.DB_CONN_STARTING}")
-        error_msg = f"{self.init_log_msg}:[{messages.EXITING}]:{messages.DB_CONN_ERROR}:"
+        error_msg = f"{self.init_log_msg}:" \
+                    f"[{messages.EXITING}]:" \
+                    f"{messages.DB_CONN_ERROR}:"
         mongo_client = None
 
         try:
@@ -41,13 +43,17 @@ class MongoUtils:
 
         if self.collections is not None and len(self.collections) > 0:
             try:
-                self.log.debug(f"{self.init_log_msg}:{messages.DB_CONN_CHECKING}")
+                self.log.debug(
+                    f"{self.init_log_msg}:{messages.DB_CONN_CHECKING}"
+                )
                 for col in self.collections:
-                    with mongo_client[self.schema][col].find({"_id": 1}) as cursor:
-                        for _ in cursor: break
+                    with mongo_client[self.schema][col].find({"_id": 1}) as c:
+                        for _ in c:
+                            break
             except Exception as e:
                 from pymongo.errors import OperationFailure
-                if isinstance(e, OperationFailure) and hasattr(e, "code") and e.code == 13:
+                if isinstance(e, OperationFailure) \
+                        and hasattr(e, "code") and e.code == 13:
                     error_msg += f":{messages.PERMISSION_DENIED}"
                 error_msg += f":{utils.get_exception(e)}"
                 self.log.error(error_msg)
@@ -56,30 +62,48 @@ class MongoUtils:
         self.log.debug(f"{self.init_log_msg}:{messages.DB_CONN_SUCCESS}")
         return mongo_client
 
-
-    def get_cursor(self, connection, query, collection, sort_column=None, sort_direction=None):
-        self.log.debug(f"{self.init_log_msg}:{messages.DB_COLL_STARTING}: {collection}")
+    def get_cursor(self,
+                   connection,
+                   query,
+                   collection,
+                   sort_column=None,
+                   sort_direction=None):
+        self.log.debug(
+            f"{self.init_log_msg}:{messages.DB_COLL_STARTING}: {collection}"
+        )
         self.log.debug(f"{self.init_log_msg}:Query: {query}")
         col = connection[self.schema][collection]
         if sort_column is not None and sort_direction is not None:
-            sort_direction = DESCENDING if sort_direction.lower() in ["descending", "desc"] else ASCENDING
+            sort_direction = DESCENDING \
+                if sort_direction.lower() in ["descending", "desc"] \
+                else ASCENDING
             col.create_index([(sort_column, sort_direction)])
         cursor = col.find(query, batch_size=self.batch_size, limit=self.limit)
         cursor.batch_size(self.batch_size)
         return cursor
 
-
     def _get_connection_string(self):
         import re
-        if self.user is not None and self.password is not None and len(self.user) > 0 and len(self.password) > 0:
+        if self.user is not None \
+                and self.password is not None \
+                and len(self.user) > 0 and len(self.password) > 0:
             self.password = utils.decode(self.log, self.password)
-            conn_string = f"mongodb://{self.user}:{self.password}@{self.host}:{self.port}/{self.schema}"
+            conn_string = (
+                f"mongodb://{self.user}:"
+                f"{self.password}@{self.host}:"
+                f"{self.port}/{self.schema}"
+            )
         else:
             conn_string = f"mongodb://{self.host}:{self.port}/{self.schema}"
         if self.authsource is not None and len(self.authsource) > 0:
             conn_string += f"?authSource={self.authsource}"
         hidden_conn = conn_string
         if self.password is not None and len(self.password) > 0:
-            hidden_conn = re.sub(self.password, messages.PASSWORD_HIDDEN_MSG, conn_string, flags=re.DOTALL)
-        self.log.debug(f"{self.init_log_msg}:{messages.DB_CONN_STRING}: {hidden_conn}")
+            hidden_conn = re.sub(self.password,
+                                 messages.PASSWORD_HIDDEN_MSG,
+                                 conn_string,
+                                 flags=re.DOTALL)
+        self.log.debug(
+            f"{self.init_log_msg}:{messages.DB_CONN_STRING}: {hidden_conn}"
+        )
         return conn_string

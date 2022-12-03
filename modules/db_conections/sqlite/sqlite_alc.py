@@ -14,16 +14,23 @@ class SQLiteDB:
     def create_engine(self):
         try:
             engine = create_engine(f"sqlite:///{self.db_file}", echo=False).\
-                execution_options(stream_results=False, isolation_level="AUTOCOMMIT")
+                execution_options(stream_results=False,
+                                  isolation_level="AUTOCOMMIT")
 
             @event.listens_for(engine, "before_cursor_execute")
-            def receive_before_cursor_execute(conn, cursor, statement, params, context, executemany):
+            def receive_before_cursor_execute(conn,
+                                              cursor,
+                                              statement,
+                                              params,
+                                              context,
+                                              executemany):
                 cursor.arraysize = self.batch_size
             return engine
         except Exception as e:
-            self.log.error(f"[{utils.get_exception(e)}]:{messages.DB_CONN_CREATE_ERROR}")
+            self.log.error(
+                f"[{utils.get_exception(e)}]:{messages.DB_CONN_CREATE_ERROR}"
+            )
             return None
-
 
     def execute(self, query):
         self.log.debug(f"[SQLite]:[Execute]:{query}")
@@ -37,7 +44,6 @@ class SQLiteDB:
                     self.log.error(utils.get_exception(e))
         return False
 
-
     def select(self, query):
         self.log.debug(f"[SQLite]:[Select]:{query}")
         final_data = []
@@ -47,7 +53,9 @@ class SQLiteDB:
                 try:
                     if query is not None:
                         rows = connection.execute(query)
-                        column_names = tuple(map(lambda x: x[0], rows.cursor.description))
+                        column_names = tuple(map(
+                            lambda x: x[0], rows.cursor.description
+                        ))
                         all_data = tuple(x for x in rows)
                         for data in all_data:
                             final_data.append(dict(zip(column_names, data)))

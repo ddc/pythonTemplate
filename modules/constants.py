@@ -11,11 +11,13 @@ __email__ = "ddc@ddc"
 __req_python_version__ = (3, 6, 0)
 
 _script_path = Path(os.path.dirname(sys.argv[0])).absolute()
+_script_name = os.path.basename(sys.argv[0]).split('.')[0]
+
 try:
     TMP_DIR = os.path.join(_script_path, "tmp")
-    os.makedirs(TMP_DIR) if not os.path.isdir(TMP_DIR) else None
-except OSError:
-    TMP_DIR = f"/tmp/{os.path.basename(sys.argv[0]).split('.')[0]}"
+    os.makedirs(TMP_DIR, exist_ok=True) if not os.path.isdir(TMP_DIR) else None
+except OSError as e:
+    TMP_DIR = f"/tmp/{_script_name}"
 
 # MAIN
 VERSION = __version__

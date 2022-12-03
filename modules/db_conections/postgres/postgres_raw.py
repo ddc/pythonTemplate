@@ -12,7 +12,6 @@ class PostgreSQLDB:
         self.password = kwargs.get("password")
         self.database = kwargs.get("database")
 
-
     async def create_connection(self):
         try:
             conn = await self._get_connection()
@@ -26,7 +25,6 @@ class PostgreSQLDB:
             # raise asyncpg.ConnectionFailureError(e)
         return conn
 
-
     async def execute(self, sql: str):
         conn = await self.create_connection()
         if conn is not None:
@@ -38,7 +36,6 @@ class PostgreSQLDB:
                 raise asyncpg.InvalidTransactionStateError(e)
             finally:
                 await conn.close()
-
 
     async def select(self, sql: str):
         final_data = {}
@@ -55,7 +52,6 @@ class PostgreSQLDB:
                 await conn.close()
         return final_data
 
-
     async def create_database(self, database: str):
         conn = await self._get_connection(database=False)
         sql = f"CREATE DATABASE \"{database}\""
@@ -69,7 +65,6 @@ class PostgreSQLDB:
                 self.log.error(f"Sql:({sql})")
             finally:
                 await conn.close()
-
 
     async def _get_connection(self, database=True):
         if database:

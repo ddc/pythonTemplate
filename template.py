@@ -16,34 +16,40 @@ class Template:
         self.debug = kwargs.get("debug")
         self.__dict__.update(kwargs)
 
-
     def init(self):
         start_timer = timer()
 
-        log_kwargs = {"days_to_keep": self.main.DAYS_TO_KEEP_LOGS,
-                      "debug": self.debug}
+        log_kwargs = {
+            "days_to_keep": self.main.DAYS_TO_KEEP_LOGS,
+            "debug": self.debug}
         self.log = Log(**log_kwargs).setup_logging()
-        self.log.info(f"[PID:{os.getpid()}]:{messages.STARTING} v{constants.VERSION}")
+        self.log.info(f"[PID:{os.getpid()}]:{messages.STARTING} "
+                      f"v{constants.VERSION}")
 
         main.start(self)
 
         total_seconds = round(timer() - start_timer, 3)
-        self.log.info(f"[{messages.FINISHED}]:{messages.TOTAL_SECONDS}: {total_seconds}")
+        self.log.info(f"[{messages.FINISHED}]:{messages.TOTAL_SECONDS}: "
+                      f"{total_seconds}")
 
 
 if __name__ == "__main__":
     if not constants.PYTHON_OK:
         sys.stderr.write(f"[ERROR]:{messages.EXITING}:"
-                         f"Python {constants.MIN_PYTHON_VERSION} {messages.NOT_FOUND}\n")
+                         f"Python {constants.MIN_PYTHON_VERSION} "
+                         f"{messages.NOT_FOUND}\n")
         sys.exit(1)
     if not os.path.isfile(constants.CFG_FILE):
         sys.stderr.write(f"[ERROR]:{messages.EXITING}:"
-                         f"{messages.CONFIG_FILE} {messages.NOT_FOUND}: {constants.CFG_FILE}\n")
+                         f"{messages.CONFIG_FILE} {messages.NOT_FOUND}: "
+                         f"{constants.CFG_FILE}\n")
         sys.exit(1)
 
     os.environ["COLUMNS"] = "200"
-    parser = ArgumentParser(description=messages.PROGRAM_DESCRIPTION, add_help=True)
-    parser.add_argument("-d", "--debug",
+    parser = ArgumentParser(description=messages.PROGRAM_DESCRIPTION,
+                            add_help=True)
+    parser.add_argument("-d",
+                        "--debug",
                         required=False,
                         action="store_true",
                         help=messages.HELP_DEBUG)
