@@ -8,10 +8,10 @@ from timeit import default_timer as timer
 from modules import main, utils, constants, messages
 
 
-class Template:
+class Main:
     def __init__(self, **kwargs):
         self.main = None
-        self.mongo = None
+        self.database = None
         self.log = None
         self.debug = kwargs.get("debug")
         self.__dict__.update(kwargs)
@@ -57,6 +57,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
     settings_vars = utils.get_all_ini_file_settings(constants.CFG_FILE)
     settings_vars.update({"debug": args.debug})
-    t = Template(**settings_vars)
+    t = Main(**settings_vars)
     del settings_vars
     t.init()
