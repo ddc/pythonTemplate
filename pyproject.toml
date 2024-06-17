@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "pythonTemplate"
-version = "1.0.0"
+version = "1.0.1"
 description = "pythonTemplate"
 authors = ["Daniel Costa <danieldcsta@gmail.com>"]
 maintainers = ["Daniel Costa"]
