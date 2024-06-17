@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import os
 import sys
-from src.logs.timed_rotating_logs import TimedRotatingLog
+from src.log_utils.timed_rotating_logs import TimedRotatingLog
 from timeit import default_timer as timer
 from src import constants, messages
 from dotenv import load_dotenv
@@ -18,8 +18,8 @@ class Main:
 
         log_kwargs = {
             "level": self.environ["LOG_LEVEL"],
-            "directory": constants.DIR_LOGS,
             "days_to_keep": self.environ["DAYS_TO_KEEP_LOGS"],
+            "directory": constants.DIR_LOGS,
         }
         self.log = TimedRotatingLog(**log_kwargs).init()
         self.log.info(f"[PID:{os.getpid()}]:{messages.STARTING}")

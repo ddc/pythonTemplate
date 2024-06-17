@@ -1,0 +1,11 @@
+services:
+  test:
+    image: localhost/pythonTemplate
+    command: bash -c "
+      python -m coverage run -m pytest -v
+      && python -m coverage report
+     "
+    env_file:
+      - .env
+    volumes:
+      - .:/opt/app

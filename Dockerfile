@@ -1,6 +1,6 @@
-FROM python:3.12-slim-bookworm AS python-base
+FROM python:3.12-slim-bookworm
 
-LABEL Description="App"
+LABEL Description="pythonTemplate"
 
 ENV TERM=xterm \
     TZ="UTC" \
@@ -21,6 +21,9 @@ ENV TERM=xterm \
 WORKDIR /opt/app
 RUN mkdir -p /opt/app/logs
 
+COPY src/ /opt/app/src
+COPY main.py pyproject.toml poetry.lock .env /opt/app/
+
 RUN set -ex \
     && apt-get update \
     && apt-get install --no-install-recommends -y curl \
@@ -28,10 +31,6 @@ RUN set -ex \
     && apt-get autoremove -y \
     && apt-get clean
 
-RUN useradd -ms /bin/bash app
+RUN poetry install --no-interaction --no-root --no-ansi --sync $(if [ "$CONFIG_ENV" = 'prod' ]; then echo '--only main'; fi)
 
-COPY --chown=app:app pyproject.toml poetry.lock .env /opt/app/
-RUN poetry install --no-interaction --no-ansi --sync $(if [ "$CONFIG_ENV" = 'prod' ]; then echo '--only main'; fi)
-
-USER app
 CMD ["python", "main.py"]

@@ -1,13 +1,14 @@
 services:
     app:
         build: .
-        container_name: app
-        user: app
-        restart: always
+        container_name: pythonTemplate
+        restart: on-failure
         env_file:
           - .env
         volumes:
-            - .:/opt/app
+            - ./src:/opt/app/src:rw
+            - ./logs:/opt/app/logs:rw
+            - ./tests:/opt/app/tests:rw
         networks:
             - network
         command: "python main.py"
